@@ -84,19 +84,42 @@ struct MainShell: View {
 
 // MARK: - Sidebar
 
+/// The DocuDesk "D" brand mark, drawn from the shared vector geometry.
+struct BrandMarkView: View {
+    private struct Part: Shape {
+        let upper: Bool
+
+        func path(in rect: CGRect) -> Path {
+            Path(upper ? BrandMark.upperPath(in: rect) : BrandMark.lowerPath(in: rect))
+        }
+    }
+
+    static let light = Color(.displayP3, red: BrandMark.lightP3.red, green: BrandMark.lightP3.green, blue: BrandMark.lightP3.blue)
+    static let dark = Color(.displayP3, red: BrandMark.darkP3.red, green: BrandMark.darkP3.green, blue: BrandMark.darkP3.blue)
+
+    var body: some View {
+        ZStack {
+            Part(upper: true).fill(Self.light)
+            Part(upper: false).fill(Self.dark)
+        }
+        .aspectRatio(BrandMark.size.width / BrandMark.size.height, contentMode: .fit)
+    }
+}
+
+/// App logo tile: the brand mark on a white rounded square, matching the app icon.
 struct LogoMark: View {
     var size: CGFloat = 40
 
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: size * 0.3, style: .continuous)
-                .fill(LinearGradient(colors: [Color(hex: 0x2F80FF), Color(hex: 0x1554D8)], startPoint: .topLeading, endPoint: .bottomTrailing))
-            Text("D")
-                .font(.system(size: size * 0.58, weight: .heavy, design: .rounded))
-                .foregroundStyle(.white)
-        }
-        .frame(width: size, height: size)
-        .shadow(color: Color(hex: 0x1A6DF0).opacity(0.3), radius: 6, y: 3)
+        BrandMarkView()
+            .frame(height: size * 0.56)
+            .frame(width: size, height: size)
+            .background(
+                RoundedRectangle(cornerRadius: size * 0.25, style: .continuous)
+                    .fill(LinearGradient(colors: [.white, Color(red: 0.94, green: 0.955, blue: 0.98)], startPoint: .top, endPoint: .bottom))
+            )
+            .overlay(RoundedRectangle(cornerRadius: size * 0.25, style: .continuous).strokeBorder(Color.black.opacity(0.08)))
+            .shadow(color: .black.opacity(0.12), radius: size * 0.1, y: size * 0.04)
     }
 }
 

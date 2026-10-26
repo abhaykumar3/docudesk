@@ -14,6 +14,10 @@ swift run DocuDeskChecks      # calculation, storage, PDF and backup checks
 swift run DocuDeskDemo ~/DocuDesk-Demo   # optional: a workspace full of sample data
 ```
 
+The app icon (`scripts/AppIcon.icns`) is generated from the vector logo in
+`Sources/DocuDeskCore/Engine/BrandMark.swift`; after changing the logo run
+`swift run BrandAssets icon scripts/AppIcon.icns`.
+
 Keep the project and the workspace folder **outside iCloud Drive** (Desktop/Documents sync can
 corrupt the SQLite database and build folders). First-run setup warns about synced folders.
 

@@ -23,6 +23,12 @@ let package = Package(
             dependencies: ["DocuDeskCore"],
             path: "Demo"
         ),
+        // Development tools: icon generation and brand-mark tracing check.
+        .executableTarget(
+            name: "BrandAssets",
+            dependencies: ["DocuDeskCore"],
+            path: "Tools/BrandAssets"
+        ),
         .executableTarget(
             name: "DocuDeskChecks",
             dependencies: ["DocuDeskCore"],

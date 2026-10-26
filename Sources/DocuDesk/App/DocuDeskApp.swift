@@ -28,6 +28,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Needed when launched as a bare SwiftPM executable rather than from the .app bundle.
         NSApp.setActivationPolicy(.regular)
+        if Bundle.main.bundleIdentifier == nil, let icon = BrandMark.appIconImage(side: 512) {
+            NSApp.applicationIconImage = NSImage(cgImage: icon, size: NSSize(width: 512, height: 512))
+        }
         NSApp.activate(ignoringOtherApps: true)
     }
 
