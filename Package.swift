@@ -17,12 +17,6 @@ let package = Package(
             dependencies: ["DocuDeskCore"]
         ),
         // Command Line Tools ship without XCTest/Testing, so checks run as a plain executable.
-        // Seeds a workspace with sample data: swift run DocuDeskDemo <folder>
-        .executableTarget(
-            name: "DocuDeskDemo",
-            dependencies: ["DocuDeskCore"],
-            path: "Demo"
-        ),
         // Development tools: icon generation and brand-mark tracing check.
         .executableTarget(
             name: "BrandAssets",

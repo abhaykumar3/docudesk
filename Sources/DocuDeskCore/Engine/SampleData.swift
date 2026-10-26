@@ -1,18 +1,19 @@
 import Foundation
 
-/// Placeholder content for template previews and the gallery.
+/// Placeholder content for template previews and the gallery. Never saved to a workspace.
+/// Previews use the user's own company profile when one exists; client and payment details
+/// stay as obvious placeholders.
 public enum SampleData {
     public static let companyID = UUID(uuidString: "00000000-0000-0000-0000-00000000D0C5")!
 
     public static var company: CompanyProfile {
         var company = CompanyProfile(id: companyID, name: "Your Company", now: Date(timeIntervalSince1970: 0))
-        company.address = Address(line1: "123 Business Street", city: "New Delhi", state: "Delhi", postalCode: "110001", country: "India")
-        company.email = "hello@yourcompany.com"
-        company.phone = "+91 98765 43210"
-        company.website = "www.yourcompany.com"
-        company.taxID = "07ABCDE1234F1Z5"
-        company.signatoryName = "John Doe"
-        company.bankDetails = "Bank: HDFC Bank · A/C 50200012345678 · IFSC HDFC0001234\nUPI: yourcompany@hdfcbank"
+        company.address = Address(line1: "Your street address", city: "City", state: "State", postalCode: "PIN", country: "Country")
+        company.email = "you@example.com"
+        company.phone = "Phone number"
+        company.taxID = "Your tax ID"
+        company.signatoryName = "Your Name"
+        company.bankDetails = "Bank name · Account number · IFSC / routing code"
         company.defaultTerms = "1. Payment is due within 15 days.\n2. Please include the invoice number in your payment reference."
         return company
     }
@@ -28,15 +29,15 @@ public enum SampleData {
             issueDate: .today,
             now: Date(timeIntervalSince1970: 0)
         )
-        var customer = PartyDetails(name: kind == .purchaseOrder ? "Metro Supplies" : "Acme Pvt. Ltd.")
-        customer.billingAddress = Address(line1: "456 Client Avenue", city: "Mumbai", state: "Maharashtra", postalCode: "400001", country: "India")
-        customer.email = "accounts@acme.example"
+        var customer = PartyDetails(name: kind == .purchaseOrder ? "Supplier Name" : "Client Name")
+        customer.billingAddress = Address(line1: "Street address", city: "City", state: "State", postalCode: "PIN", country: "Country")
+        customer.email = "client@example.com"
         document.customer = customer
         switch kind {
         case .receipt:
             document.receipt?.amountReceived = 53100
             document.receipt?.method = .bankTransfer
-            document.receipt?.transactionReference = "UTR 4521 8890 1123"
+            document.receipt?.transactionReference = "Transaction reference"
             document.receipt?.againstDocumentNumber = NumberingRule(prefix: "INV").format(1, year: CalendarDate.today.year)
         default:
             document.items = [

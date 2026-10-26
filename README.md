@@ -3,15 +3,33 @@
 Offline-first macOS app for creating, organising, exporting and backing up business documents.
 Built from [`docs/prd.md`](docs/prd.md). Phase 1 MVP.
 
-## Build & run
+## Install
 
-Requires macOS 14+ and Swift 6 (Xcode or Command Line Tools).
+Requires macOS 14 or later and Swift 6 (Xcode or the Command Line Tools: `xcode-select --install`).
 
 ```bash
-scripts/build-app.sh          # release build → build/DocuDesk.app
+git clone https://github.com/abhaykumar3/docudesk.git ~/Developer/DocuDesk
+cd ~/Developer/DocuDesk
+scripts/install.sh            # builds a release and installs /Applications/DocuDesk.app
+```
+
+On first launch DocuDesk asks for your business details and where to keep its folder. Your
+documents live in that folder, so reinstalling or updating the app never touches them.
+
+**Update:** `git pull && scripts/install.sh`
+**Uninstall:** delete `/Applications/DocuDesk.app`. Your workspace folder stays until you delete it.
+
+**Another Mac:** copy `DocuDesk.app` over (e.g. zipped). The build is ad-hoc signed, not notarised,
+so the first time macOS blocks it: right-click the app → **Open** → **Open**, or run
+`xattr -dr com.apple.quarantine /Applications/DocuDesk.app`. AI drafting needs macOS 26 with
+Apple Intelligence; everything else works on macOS 14+.
+
+## Develop
+
+```bash
+scripts/build-app.sh          # release build → build/DocuDesk.app (add `debug` for a debug build)
 open build/DocuDesk.app
-swift run DocuDeskChecks      # calculation, storage, PDF and backup checks
-swift run DocuDeskDemo ~/DocuDesk-Demo   # optional: a workspace full of sample data
+swift run DocuDeskChecks      # calculation, storage, PDF, export, backup and migration checks
 ```
 
 The app icon (`scripts/AppIcon.icns`) is generated from the vector logo in
